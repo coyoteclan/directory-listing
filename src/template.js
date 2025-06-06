@@ -22,9 +22,11 @@ export default function generate(path, list, opts) {
   <style>${'\n' + styles}</style>
 </head>
 <body>
-<header>
+<div>
   <p align="center">Free Palestine!</p>
   <div class="flag-strip"></div>
+</div>
+<header>
   <h1>Index of <span>${indexOf}</span></h1>
 </header>
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none">

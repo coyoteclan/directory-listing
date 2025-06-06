@@ -132,7 +132,7 @@ footer {
   padding: 1rem 0;
 }
 
-.flag-style {
+.flag-strip {
   height: .25rem;
   background-image: linear-gradient(to right, #EE2A35 0%, #EE2A35 25%, black 25%, black 50%, white 50%, white 75%, #009736 75%, #009736 100%);
   background-size: 100%;
