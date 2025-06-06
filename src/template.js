@@ -27,7 +27,7 @@ export default function generate(path, list, opts) {
   <div class="flag-strip"></div>
 </div>
 <header>
-  <h1> Test Index of <span>${indexOf}</span></h1>
+  <h1> Index of <span>${indexOf}</span></h1>
 </header>
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
   <defs>
