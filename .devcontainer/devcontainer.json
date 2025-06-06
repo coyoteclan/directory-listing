@@ -1,6 +1,6 @@
 {
   "name": "GitHub Actions (JavaScript)",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:dev-18-bookworm",
   "postCreateCommand": "npm install",
   "customizations": {
     "codespaces": {
@@ -15,7 +15,7 @@
         "redhat.vscode-yaml"
       ],
       "settings": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        //"editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.tabSize": 2,
         "editor.formatOnSave": true,
         "markdown.extension.list.indentationSize": "adaptive",
@@ -29,6 +29,6 @@
   },
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers-contrib/features/prettier:1": {}
+    //"ghcr.io/devcontainers-contrib/features/prettier:1": {}
   }
 }
