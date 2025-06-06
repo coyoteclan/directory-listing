@@ -1,5 +1,5 @@
 {
-  "name": "GitHub Actions (JavaScript)",
+  "name": "JavaScript Build",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:dev-18-bookworm",
   "postCreateCommand": "npm install",
   "customizations": {
