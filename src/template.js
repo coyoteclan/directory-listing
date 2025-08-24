@@ -1,6 +1,7 @@
 import styles from './styles.css?raw'
 import { marked } from 'marked'
 import fs from 'fs/promises'
+import { path } from 'path'
 
 /**
  * Generate index.html file content with the given options.
@@ -10,15 +11,15 @@ import fs from 'fs/promises'
  * @param {{footerContent?: String}} [opts]
  * @returns {string}
  */
-export default async function generate(path, list, opts) {
-  const readmeVariants = ['README.md', 'readme.md', 'Readme.md', 'README.MD']
+export default async function generate(dirPath, list, opts) {
+  const readmeVariants = ['README.md', 'readme.md', 'Readme.md', 'README.MD', 'ReadMe.md']
   const readmeItem = list.find(item => readmeVariants.includes(item.path) && !item.isDirectory)
   let footerContent = opts && opts.footerContent ? opts.footerContent : ''
   let readmeContent = ''
   
   if (readmeItem) {
     try {
-      const fullReadmePath = path.join(path || '.', readmeItem.path)
+      const fullReadmePath = path.join(dirPath || '.', readmeItem.path)
       const mdContent = await fs.readFile(fullReadmePath, 'utf8')
       const html = marked.parse(mdContent, {
         gfm: true,
@@ -32,7 +33,7 @@ export default async function generate(path, list, opts) {
       readmeContent = '<div class="readme-container"><p><em>README file found but could not be read.</em></p></div>'
     }
   }
-  const indexOf = '/' + path.replace(/^\.+/, '')
+  const indexOf = '/' + dirPath.replace(/^\.+/, '')
 
   return `<!DOCTYPE html>
 <html lang="en">
