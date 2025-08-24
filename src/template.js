@@ -14,11 +14,23 @@ export default async function generate(path, list, opts) {
   const readmeVariants = ['README.md', 'readme.md', 'Readme.md', 'README.MD']
   const readmeItem = list.find(item => readmeVariants.includes(item.path) && !item.isDirectory)
   let footerContent = opts && opts.footerContent ? opts.footerContent : ''
+  let readmeContent = ''
   
   if (readmeItem) {
-    const mdContent = await fs.readFile(`${path ? path + '/' : ''}${readmeItem.path}`, 'utf8')
-    const html = marked.parse(mdContent)
-    footerContent = `<div class="readme-container">${html}</div>` + (footerContent ? `\n${footerContent}` : '')
+    try {
+      const fullReadmePath = path.join(path || '.', readmeItem.path)
+      const mdContent = await fs.readFile(fullReadmePath, 'utf8')
+      const html = marked.parse(mdContent, {
+        gfm: true,
+        breaks: true,
+        headerIds: true,
+        mangle: false
+      })
+      readmeContent = `<div class="readme-container">${html}</div>`
+    } catch (error) {
+      console.warn(`Could not read README file: ${error.message}`)
+      readmeContent = '<div class="readme-container"><p><em>README file found but could not be read.</em></p></div>'
+    }
   }
   const indexOf = '/' + path.replace(/^\.+/, '')
 
@@ -100,7 +112,7 @@ export default async function generate(path, list, opts) {
     </tbody>
   </table>
 </main>
-${opts && opts.footerContent && `<footer>${opts.footerContent}</footer>`}
+${footerContent && `<footer>${footerContent}</footer>`}
 </body>
 </html>
 `
