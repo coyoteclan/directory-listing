@@ -83,18 +83,20 @@ const input = {
 
   const [generated, skipped] = [[], []]
 
-  list.forEach((files, dir) => {
-    if (files.length) {
-      const path = join(dir, 'index.html')
+  await Promise.all(
+    Array.from(list.entries()).map(async ([dir, files]) => {
+      if (files.length) {
+        const path = join(dir, 'index.html')
 
-      if (input.overwrite || !existsSync(path)) {
-        writeFileSync(path, generate(dir, files, {footerContent: input.footer}), { flush: true })
-        generated.push(path)
-      } else {
-        skipped.push(path)
+        if (input.overwrite || !existsSync(path)) {
+          writeFileSync(path, generate(dir, files, { footerContent: input.footer }), { flush: true })
+          generated.push(path)
+        } else {
+          skipped.push(path)
+        }
       }
-    }
-  })
+    })
+  )
 
   info(
     `Generated ${generated.length} index.html files: ${generated.join(', ')}${
