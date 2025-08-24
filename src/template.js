@@ -47,6 +47,7 @@ export default async function generate(dirPath, list, opts, indexing = false) {
   ${blocking}
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="generator" content="github.com/coyoteclan/directory-listing"/>
+  <meta name="description" content="Index of ${indexOf}"/>
   <title>Index of ${indexOf}</title>
   <style>${styles}</style>
 </head>
