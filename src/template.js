@@ -1,12 +1,12 @@
 import styles from './styles.css?raw'
 import { marked } from 'marked'
 import fs from 'fs/promises'
-import { path } from 'path'
+import path from 'path'
 
 /**
  * Generate index.html file content with the given options.
  *
- * @param {String} path
+ * @param {String} dirPath
  * @param {Array<{path: String, isDirectory: Boolean, size: Number, modifiedAt: Date}>} list
  * @param {{footerContent?: String}} [opts]
  * @returns {string}
@@ -14,7 +14,6 @@ import { path } from 'path'
 export default async function generate(dirPath, list, opts) {
   const readmeVariants = ['README.md', 'readme.md', 'Readme.md', 'README.MD', 'ReadMe.md']
   const readmeItem = list.find(item => readmeVariants.includes(item.path) && !item.isDirectory)
-  let footerContent = opts && opts.footerContent ? opts.footerContent : ''
   let readmeContent = ''
   
   if (readmeItem) {
@@ -33,7 +32,9 @@ export default async function generate(dirPath, list, opts) {
       readmeContent = '<div class="readme-container"><p><em>README file found but could not be read.</em></p></div>'
     }
   }
-  const indexOf = '/' + dirPath.replace(/^\.+/, '')
+  
+  const indexOf = '/' + (dirPath || '').replace(/^\.+/, '')
+  const footerContent = opts?.footerContent || ''
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -43,7 +44,7 @@ export default async function generate(dirPath, list, opts) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="generator" content="github.com/gacts/directory-listing"/>
   <title>Index of ${indexOf}</title>
-  <style>${'\n' + styles}</style>
+  <style>${styles}</style>
 </head>
 <body>
 <div>
@@ -80,7 +81,7 @@ export default async function generate(dirPath, list, opts) {
     </thead>
     <tbody>
       ${
-        ['.', '/', './'].includes(path)
+        ['.', '/', './'].includes(dirPath)
           ? ''
           : `
         <tr>
@@ -112,6 +113,7 @@ export default async function generate(dirPath, list, opts) {
         .join('\n')}
     </tbody>
   </table>
+  ${readmeContent}
 </main>
 ${footerContent && `<footer>${footerContent}</footer>`}
 </body>
