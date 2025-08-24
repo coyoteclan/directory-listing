@@ -31,6 +31,10 @@ inputs:
   footer:
     description: The footer content to be added to the index file
     default: 'Repository <a href="https://github.com/${{ github.repository }}">${{ github.repository }}</a>'
+  
+  indexing:
+    description: Enable sitemap indexing
+    default: 'false'
 
 outputs:
   generated:

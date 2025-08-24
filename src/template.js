@@ -11,7 +11,7 @@ import path from 'path'
  * @param {{footerContent?: String}} [opts]
  * @returns {string}
  */
-export default async function generate(dirPath, list, opts) {
+export default async function generate(dirPath, list, opts, indexing = false) {
   const readmeVariants = ['README.md', 'readme.md', 'Readme.md', 'README.MD', 'ReadMe.md']
   const readmeItem = list.find(item => readmeVariants.includes(item.path) && !item.isDirectory)
   let readmeContent = ''
@@ -35,14 +35,18 @@ export default async function generate(dirPath, list, opts) {
   
   const indexOf = '/' + (dirPath || '').replace(/^\.+/, '')
   const footerContent = opts?.footerContent || ''
+  let blocking = ''
+  if (indexing) {
+    blocking = '<meta name="robots" content="nofollow,noarchive,noindex">'
+  }
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="robots" content="nofollow,noarchive,noindex">
+  ${blocking}
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="generator" content="github.com/gacts/directory-listing"/>
+  <meta name="generator" content="github.com/coyoteclan/directory-listing"/>
   <title>Index of ${indexOf}</title>
   <style>${styles}</style>
 </head>
