@@ -1,4 +1,6 @@
 import styles from './styles.css?raw'
+import { marked } from 'marked'
+import fs from 'fs/promises'
 
 /**
  * Generate index.html file content with the given options.
@@ -8,8 +10,17 @@ import styles from './styles.css?raw'
  * @param {{footerContent?: String}} [opts]
  * @returns {string}
  */
-export default function generate(path, list, opts) {
-  const indexOf = '/' + path.replace(/\.+/, '')
+export default async function generate(path, list, opts) {
+  const readmeVariants = ['README.md', 'readme.md', 'Readme.md', 'README.MD']
+  const readmeItem = list.find(item => readmeVariants.includes(item.path) && !item.isDirectory)
+  let footerContent = opts && opts.footerContent ? opts.footerContent : ''
+  
+  if (readmeItem) {
+    const mdContent = await fs.readFile(`${path ? path + '/' : ''}${readmeItem.path}`, 'utf8')
+    const html = marked.parse(mdContent)
+    footerContent = `<div class="readme-container">${html}</div>` + (footerContent ? `\n${footerContent}` : '')
+  }
+  const indexOf = '/' + path.replace(/^\.+/, '')
 
   return `<!DOCTYPE html>
 <html lang="en">
