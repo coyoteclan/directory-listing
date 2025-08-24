@@ -89,7 +89,8 @@ const input = {
         const path = join(dir, 'index.html')
 
         if (input.overwrite || !existsSync(path)) {
-          writeFileSync(path, generate(dir, files, { footerContent: input.footer }), { flush: true })
+          const html = await generate(dir, files, { footerContent: input.footer })
+          writeFileSync(path, html, { flush: true })
           generated.push(path)
         } else {
           skipped.push(path)
