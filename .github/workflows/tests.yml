@@ -9,6 +9,7 @@ on:
     tags-ignore: ['**']
     paths-ignore: ['**.md']
   pull_request:
+    branches: all
     paths-ignore: ['**.md']
 
 concurrency:
