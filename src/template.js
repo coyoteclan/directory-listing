@@ -36,7 +36,7 @@ export default async function generate(dirPath, list, opts, indexing = false) {
   const indexOf = '/' + (dirPath || '').replace(/^\.+/, '')
   const footerContent = opts?.footerContent || ''
   let blocking = ''
-  if (indexing) {
+  if (!indexing) {
     blocking = '<meta name="robots" content="nofollow,noarchive,noindex">'
   }
 
