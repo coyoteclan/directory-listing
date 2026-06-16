@@ -1,6 +1,6 @@
 {
   "name": "JavaScript Build",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:dev-18-bookworm",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:dev-24-trixie",
   "postCreateCommand": "npm install",
   "customizations": {
     "codespaces": {
