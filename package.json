@@ -24,7 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.11.1",
-    "glob": "^11.1.0",
+    "glob": "^13.0.6",
     "marked": "^15.0.12"
   },
   "devDependencies": {
